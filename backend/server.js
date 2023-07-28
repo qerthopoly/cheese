@@ -5,12 +5,14 @@ const path = require("path");
 const joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { log } = require("console");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 const PORT = 9999;
+const JWT_KEY = process.env.JWT_SECRET;
 
 const dbURL =
   "mongodb+srv://cheese:ultramegacheese@cheese.nnxtpba.mongodb.net/";
@@ -51,6 +53,145 @@ app.post("/cheese", async (req, res) => {
     return res.status(500).send({ error: "Error while adding a new cheese" });
   }
 });
+
+app.get("/cheese/:id", async (req, res) => {
+  const cheeseID = req.params.id;
+
+  try {
+    const foundCheese = await cheeseDB.findOne({ _id: new ObjectId(cheeseID) });
+
+    if (foundCheese === null) {
+      return res.status(500).send({ error: "Such cheese doesn't exist" });
+    } else {
+      return res.send(foundCheese);
+    }
+  } catch {
+    return res
+      .status(500)
+      .send({ error: "Error while searching for this specific cheese" });
+  }
+});
+
+app.get("/users", async (req, res) => {
+  try {
+    const data = await usersDB.find().toArray();
+    return res.send(data);
+  } catch {
+    res.status(500).send({ error: "Error while loading users" });
+  }
+});
+
+const loggingSchema = joi.object({
+  nickname: joi.string().required(),
+  password: joi.string().required(),
+  email: joi.string().email().trim().lowercase(),
+});
+
+app.post("/register", async (req, res) => {
+  let newUser = req.body;
+
+  try {
+    newUser = await loggingSchema.validateAsync(newUser);
+  } catch {
+    return res.json({ error: "Error while validating a user" });
+  }
+
+  const passwordHashed = bcrypt.hashSync(newUser.password, 10);
+
+  const regDate = new Date();
+
+  usersDB.insertOne({
+    nickname: newUser.nickname,
+    password: passwordHashed,
+    email: newUser.email,
+    picture: "https://uploads.scratch.mit.edu/users/avatars/72254452.png",
+    reg_date: regDate.toISOString(),
+  });
+
+  res.json({
+    error: false,
+    message: "User has been registred",
+  });
+});
+
+app.post("/login", async (req, res) => {
+  let userData = req.body;
+
+  try {
+    userData = await loggingSchema.validateAsync(userData);
+  } catch (error) {
+    console.log("LOGIN ERROR", error);
+    return res.json({
+      error: true,
+      message: error,
+    });
+  }
+
+  const existingUser = await usersDB.findOne({
+    nicname: userData.nickname,
+  });
+
+  if (!existingUser) {
+    return res.json({
+      error: true,
+      message: "User was not found",
+    });
+  }
+
+  const comparePasswords = await bcrypt.compare(
+    userData.password,
+    existingUser.password
+  );
+
+  if (!comparePasswords) {
+    return res.json({
+      error: true,
+      message: "Incorrect password",
+    });
+  }
+
+  const JWTEncoded = jwt.sign(
+    {
+      nickname: existingUser.nickname,
+      password: existingUser.password,
+    },
+    JWT_KEY
+  );
+
+  console.log('ENCODED', JWTEncoded)
+
+  res.json({
+    error: false,
+    message: "Logged in successflly",
+    token: JWTEncoded,
+  });
+});
+
+app.post("/comments", (req, res) => {
+
+	const newComment = req.body
+	const currentDate = new Date()
+	const idFromToken = Math.floor(Math.random() * 1001);
+	const cheeseIDfromParams = Math.floor(Math.random() * 1001);
+
+	try {
+		const dbRes = commentsDB.insertOne({
+			user_id: idFromToken,
+			comment: newComment.comment,
+			date: currentDate.toISOString(),
+			cheese_id: cheeseIDfromParams
+		})
+	} catch {
+		return res.status(500).send({ error: "Error while posting comment" })
+	}
+
+})
+
+// app.get("/comments", async (req, res) => {
+
+// })
+
+
 
 function start() {
   console.log(`
