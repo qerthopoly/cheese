@@ -1,0 +1,25 @@
+.WrapperHome {
+	/* display: flex; */
+	/* flex-direction: row; */
+	/* justify-content: space-between; */
+	width: 100vh;
+}
+
+.NavigationBar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+	width: 100vh;
+	background-color: #261F1F;
+	color: white;
+}
+
+.LoginButton {
+	background-color: #A93C2F;
+	color: white;
+	border: none;
+	padding: 10px 30px 10px 30px;
+	border-radius: 5px;
+}
