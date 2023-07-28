@@ -1,0 +1,29 @@
+.GridContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (min-width: 550px) {
+  .GridContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* TABLET */
+
+@media (min-width: 768px) {
+  .GridContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* DESKTOP */
+
+@media (min-width: 1024px) {
+  .GridContainer {
+    max-width: 1200px;
+  }
+
+}

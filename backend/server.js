@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = 9999;
+const PORT = 9998;
 const JWT_KEY = process.env.JWT_SECRET;
 
 const dbURL =

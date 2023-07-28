@@ -1,15 +1,15 @@
 .App {
-  font-family: 'Montserrat', sans-serif;
-  /* text-align: center; */
-  /* background-color: #ffc89b; */
+  font-family: "Montserrat", sans-serif;
   min-height: 100vh;
+  min-width: 350px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
-  color: rgb(0, 0, 0);
+  color: black;
 }
 
 .LoginButton {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
+

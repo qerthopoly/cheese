@@ -1,0 +1,43 @@
+.Card {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 5px;
+}
+
+.CardImage {
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+  /* background-color: darkolivegreen; */
+}
+
+.CardText {
+  display: flex;
+  /* width: 100%; */
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px 10px 15px;
+}
+
+.CardTitle {
+  margin: 0px;
+}
+
+.LikesSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.HeartSymbol {
+  margin: 0px;
+  font-size: 1.6em;
+  color: #a93c2f;
+  /* fill: #a93c2f; */
+}
+
+.NumberOfLikes {
+  margin: 0px;
+  font-size: 1.4em;
+}
