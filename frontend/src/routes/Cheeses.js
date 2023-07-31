@@ -4,6 +4,7 @@ import "../styles/Pages.css";
 import useFetchGet from "../hooks/useFetchGet";
 import Card from "../components/Card";
 import Grid from "../components/Grid";
+import ButtonMain from "../components/ButtonMain";
 
 export default function Cheeses() {
   const cheesesURL = "http://localhost:9998/cheese";
@@ -11,11 +12,18 @@ export default function Cheeses() {
 
   const state = useFetchGet(cheesesURL);
 
+  function navigateToAddCheese() {
+    navigate('/addcheese')
+  }
+
   return (
     <div className="WrapperHomeCheese">
       <NavigationBar buttonText="LOGIN" />
       <div className="MiddleSectionCheese">
-        <h1 className="CheesesPageH1">Behold - the cheeses:</h1>
+        <div className="middle-section-header">
+          <h1 className="CheesesPageH1">Behold - the cheeses:</h1>
+          <ButtonMain text="ADD CHEESE +" buttonFunction={navigateToAddCheese} />
+        </div>
         <div className="CheeseRenders">
           {state.isLoading ? (
             <h2 className="IsLoadingText">Loading...</h2>
@@ -23,6 +31,7 @@ export default function Cheeses() {
             <Grid
               content={state.data.map((cheese) => (
                 <Card
+                  key={cheese._id}
                   image={cheese.picture}
                   altText={cheese.name}
                   cheeseName={cheese.name}

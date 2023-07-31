@@ -1,0 +1,60 @@
+.input-wrapper,
+.textarea-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-error-message,
+.textarea-error-message {
+  text-align: center;
+  margin-bottom: 10px;
+  color: rgba(255, 0, 0, 0.7);
+}
+
+.input-simple,
+.input-textarea {
+  font-family: "Montserrat", sans-serif;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.01) 0px 1px 2px 0px;
+}
+
+.input-error,
+.input-textarea-error {
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  box-shadow: rgba(255, 0, 0, 0.05) 0px 1px 3px 0px,
+    rgba(255, 0, 0, 0.01) 0px 1px 2px 0px;
+}
+
+.input-simple:focus,
+.input-textarea:focus {
+  outline: none;
+}
+
+@media (min-width: 768px) {
+  .input-simple,
+  .input-textarea {
+    margin-bottom: 15px;
+  }
+
+  .input-error-message,
+  .textarea-error-message {
+    margin-bottom: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .input-simple,
+  .input-textarea {
+    margin-bottom: 20px;
+  }
+
+  .input-error-message,
+  .textarea-error-message {
+    margin-bottom: 20px;
+  }
+}
