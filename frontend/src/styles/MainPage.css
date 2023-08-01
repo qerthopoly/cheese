@@ -3,6 +3,19 @@
   box-sizing: border-box;
 }
 
+.welcome-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.welcome-text {
+  font-size: 0.9em;
+  font-weight: lighter;
+  white-space: nowrap;
+}
+
 .WrapperHome {
   display: flex;
   flex-direction: column;
@@ -34,6 +47,7 @@
   padding: 10px;
   border-radius: 5px;
   transition: 0.1s;
+  white-space: nowrap;
 }
 
 .MainButton:hover {
@@ -74,6 +88,14 @@
   .MainButton {
     padding: 10px 20px 10px 20px;
   }
+
+  .welcome-section {
+    gap: 15px;
+  }
+  
+  .welcome-text {
+    font-size: 1.1em;
+  }
 }
 
 /* DESKTOP */
@@ -85,5 +107,13 @@
 
   .MainButton {
     padding: 10px 30px 10px 30px;
+  }
+
+  .welcome-section {
+    gap: 20px;
+  }
+  
+  .welcome-text {
+    font-size: 1.2em;
   }
 }

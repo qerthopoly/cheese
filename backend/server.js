@@ -5,6 +5,8 @@ const path = require("path");
 const joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const { isLoggedIn } = require("./middle");
 const { log } = require("console");
 
 const app = express();
@@ -33,7 +35,7 @@ app.get("/cheese", async (req, res) => {
   }
 });
 
-app.post("/cheese", async (req, res) => {
+app.post("/cheese", isLoggedIn, async (req, res, next) => {
   const newCheese = req.body;
 
   const idFromToken = Math.floor(Math.random() * 1001); // change it later!
@@ -54,7 +56,7 @@ app.post("/cheese", async (req, res) => {
   }
 });
 
-app.get("/cheese/:id", async (req, res) => {
+app.get("/cheese/:id", isLoggedIn, async (req, res, next) => {
   const cheeseID = req.params.id;
 
   try {
@@ -86,6 +88,8 @@ const loggingSchema = joi.object({
   password: joi.string().required(),
   email: joi.string().email().trim().lowercase(),
 });
+
+///// LOGIN AND REGISTER /////
 
 app.post("/register", async (req, res) => {
   let newUser = req.body;
@@ -128,7 +132,7 @@ app.post("/login", async (req, res) => {
   }
 
   const existingUser = await usersDB.findOne({
-    nicname: userData.nickname,
+    nickname: userData.nickname,
   });
 
   if (!existingUser) {
@@ -152,46 +156,53 @@ app.post("/login", async (req, res) => {
 
   const JWTEncoded = jwt.sign(
     {
+      user_id: existingUser._id,
       nickname: existingUser.nickname,
-      password: existingUser.password,
     },
     JWT_KEY
   );
 
-  console.log('ENCODED', JWTEncoded)
+  // console.log("ENCODED", JWTEncoded);
 
   res.json({
     error: false,
-    message: "Logged in successflly",
+    message: "Logged in successfully",
     token: JWTEncoded,
+    user_id: existingUser._id,
+    nickname: existingUser.nickname,
   });
 });
 
 app.post("/comments", (req, res) => {
+  const newComment = req.body;
+  const currentDate = new Date();
+  const idFromToken = Math.floor(Math.random() * 1001);
+  const cheeseIDfromParams = Math.floor(Math.random() * 1001);
 
-	const newComment = req.body
-	const currentDate = new Date()
-	const idFromToken = Math.floor(Math.random() * 1001);
-	const cheeseIDfromParams = Math.floor(Math.random() * 1001);
+  try {
+    const dbRes = commentsDB.insertOne({
+      user_id: idFromToken,
+      comment: newComment.comment,
+      date: currentDate.toISOString(),
+      cheese_id: cheeseIDfromParams,
+    });
+  } catch {
+    return res.status(500).send({ error: "Error while posting comment" });
+  }
+});
 
-	try {
-		const dbRes = commentsDB.insertOne({
-			user_id: idFromToken,
-			comment: newComment.comment,
-			date: currentDate.toISOString(),
-			cheese_id: cheeseIDfromParams
-		})
-	} catch {
-		return res.status(500).send({ error: "Error while posting comment" })
-	}
+app.get("/posts", isLoggedIn, (req, res, next) => {
+  const userData = req.myData;
 
-})
+  res.json({
+    user_id: userData.user_id,
+    nickname: userData.nickname,
+  });
+});
 
 // app.get("/comments", async (req, res) => {
 
 // })
-
-
 
 function start() {
   console.log(`

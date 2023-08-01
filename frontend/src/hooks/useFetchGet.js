@@ -58,11 +58,19 @@ function reducer(state, action) {
 export default function useFetchGet(URL, sort) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const jwtToken = sessionStorage.getItem("jwtToken");
+
   useEffect(() => {
     function fetchData() {
       dispatch({ type: "FETCH_START" });
 
-      fetch(URL)
+      fetch(URL, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": `Bearer ${jwtToken}`,
+        },
+      })
         .then((data) => data.json())
         .then((data) => {
           if (sort) {
@@ -78,7 +86,7 @@ export default function useFetchGet(URL, sort) {
     }
 
     fetchData();
-  }, [URL, sort]);
+  }, [URL, sort, jwtToken]);
 
-  return state ;
+  return state;
 }

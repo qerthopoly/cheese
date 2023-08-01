@@ -2,7 +2,7 @@ import { useReducer } from "react";
 
 const initialState = {
   isLoading: false,
-  error: true,
+  error: false,
 };
 
 function reducer(state, action) {
@@ -45,10 +45,10 @@ export default function useFetchPost(URL, successCallBack) {
       .then((data) => {
         if (data.error) {
           dispatch({ type: "FETCH_ERROR" });
-          return console.log(data.error);
+          return console.log('Fetch post error', data.message);
         } else {
           dispatch({ type: "FETCH_SUCCESS" });
-          successCallBack();
+          successCallBack(data);
         }
       });
   }

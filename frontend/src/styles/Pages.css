@@ -90,7 +90,6 @@
 /* TABLET */
 
 @media (min-width: 768px) {
-
   .CheesesPageH1,
   .add-cheese-h1,
   .login-h1,
@@ -121,7 +120,6 @@
 /* DESKTOP */
 
 @media (min-width: 1024px) {
-
   .CheesesPageH1,
   .add-cheese-h1,
   .login-h1,

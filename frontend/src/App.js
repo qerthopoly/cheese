@@ -1,46 +1,48 @@
-import './App.css';
-import { createContext, useReducer } from 'react'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Home from './routes/Home';
-import ErrorPage from './ErrorPage';
-import Cheeses from './routes/Cheeses';
-import AddCheese from './routes/AddCheese';
-import Login from './routes/Login';
-import Register from './routes/Register';
+import "./App.css";
+// import { createContext, useReducer } from 'react'
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Home from "./routes/Home";
+import ErrorPage from "./ErrorPage";
+import Cheeses from "./routes/Cheeses";
+import AddCheese from "./routes/AddCheese";
+import Login from "./routes/Login";
+import Register from "./routes/Register";
+import AuthProvider from "./contexts/AuthContext";
 
 const routes = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Home />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/login',
+    path: "/login",
     element: <Login />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/register',
+    path: "/register",
     element: <Register />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/home',
+    path: "/home",
     element: <Cheeses />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/addcheese',
+    path: "/addcheese",
     element: <AddCheese />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
-])
-
+]);
 
 function App() {
   return (
     <div className="App">
-      <RouterProvider router={routes}></RouterProvider>
+      <AuthProvider>
+        <RouterProvider router={routes}></RouterProvider>
+      </AuthProvider>
     </div>
   );
 }

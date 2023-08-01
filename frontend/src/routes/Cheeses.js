@@ -12,6 +12,8 @@ export default function Cheeses() {
 
   const state = useFetchGet(cheesesURL);
 
+  // console.log('CHEESE STATE', state)
+
   function navigateToAddCheese() {
     navigate('/addcheese')
   }
@@ -20,7 +22,7 @@ export default function Cheeses() {
     <div className="WrapperHomeCheese">
       <NavigationBar buttonText="LOGIN" />
       <div className="MiddleSectionCheese">
-        <div className="middle-section-header">
+        <div className="section-space-between">
           <h1 className="CheesesPageH1">Behold - the cheeses:</h1>
           <ButtonMain text="ADD CHEESE +" buttonFunction={navigateToAddCheese} />
         </div>

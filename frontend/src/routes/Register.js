@@ -14,8 +14,8 @@ export default function Register() {
 
   const { state, fetchPost } = useFetchPost(usersURL, navigateReturnToLogin);
 
-  function handleRegister () {
-    fetchPost(body)
+  function handleRegister() {
+    fetchPost(body);
   }
 
   function navigateReturnToLogin() {
@@ -32,33 +32,32 @@ export default function Register() {
           <Input
             type="text"
             placeholder="Nickname"
-            onChange={(e) => setBody({...body, nickname: e.target.value})}
+            onChange={(e) => setBody({ ...body, nickname: e.target.value })}
           />
           <h2 className="register-h2">Password:</h2>
           <Input
             type="password"
             placeholder="Password"
-            onChange={(e) => setBody({...body, password: e.target.value})}
+            onChange={(e) => setBody({ ...body, password: e.target.value })}
           />
           <h2 className="register-h2">E-mail:</h2>
           <Input
             type="text"
             placeholder="E-mail"
-            onChange={(e) => setBody({...body, email: e.target.value})}
+            onChange={(e) => setBody({ ...body, email: e.target.value })}
           />
         </div>
         <div className="register-buttons">
-          <ButtonMain
-            text="REGISTER"
-            buttonFunction={handleRegister}
-          />
+          <ButtonMain text="REGISTER" buttonFunction={handleRegister} />
           <ButtonMain text="CANCEL" buttonFunction={navigateReturnToLogin} />
         </div>
-        {state.isLoading ? <h2 className="is-loading-text">Loading...</h2> : <></>}
+        {state.isLoading ? (
+          <h2 className="is-loading-text">Loading...</h2>
+        ) : (
+          <></>
+        )}
         {state.error ? (
-          <h2 className="is-loading-text">
-            Please fill the form correctly
-          </h2>
+          <h2 className="is-loading-text">Please fill the form correctly</h2>
         ) : (
           <></>
         )}
