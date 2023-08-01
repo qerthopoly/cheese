@@ -26,7 +26,7 @@ export default function Cheeses() {
         </div>
         <div className="CheeseRenders">
           {state.isLoading ? (
-            <h2 className="IsLoadingText">Loading...</h2>
+            <h2 className="is-loading-text">Loading...</h2>
           ) : (
             <Grid
               content={state.data.map((cheese) => (

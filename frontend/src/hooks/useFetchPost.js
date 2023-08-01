@@ -2,7 +2,7 @@ import { useReducer } from "react";
 
 const initialState = {
   isLoading: false,
-  error: false,
+  error: true,
 };
 
 function reducer(state, action) {

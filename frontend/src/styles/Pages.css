@@ -6,6 +6,7 @@
   font-size: 1.4em;
 }
 
+.add-cheese-h1,
 .login-h1,
 .register-h1 {
   text-align: center;
@@ -13,7 +14,7 @@
 
 .form-h2,
 .login-h2,
-.register-h1 {
+.register-h2 {
   font-size: 1.2em;
   margin: 0px;
   margin-bottom: 10px;
@@ -53,7 +54,7 @@
   width: 300px;
 }
 
-.middle-section-header {
+.section-space-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,9 +68,9 @@
 
 .submit-section {
   display: flex;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   margin-top: 10px;
 }
 
@@ -80,7 +81,8 @@
   gap: 10px;
 }
 
-.IsLoadingText {
+.is-loading-text {
+  font-size: 1.2em;
   text-align: center;
   color: dimgrey;
 }
@@ -88,6 +90,7 @@
 /* TABLET */
 
 @media (min-width: 768px) {
+
   .CheesesPageH1,
   .add-cheese-h1,
   .login-h1,
@@ -105,14 +108,20 @@
     font-size: 1.3em;
   }
 
-  .middle-section-login {
+  .middle-section-login,
+  .middle-section-register {
     width: 500px;
+  }
+
+  .is-loading-text {
+    font-size: 1.5em;
   }
 }
 
 /* DESKTOP */
 
 @media (min-width: 1024px) {
+
   .CheesesPageH1,
   .add-cheese-h1,
   .login-h1,
@@ -130,7 +139,12 @@
     font-size: 1.6em;
   }
 
-  .middle-section-login {
+  .middle-section-login,
+  .middle-section-register {
     width: 600px;
+  }
+
+  .is-loading-text {
+    font-size: 1.8em;
   }
 }

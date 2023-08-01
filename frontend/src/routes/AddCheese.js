@@ -36,10 +36,7 @@ export default function AddCheese() {
     <div className="wrapper-add-cheese">
       <NavigationBar buttonText="LOGIN" />
       <div className="middle-section-add-cheese">
-        <div className="middle-section-header">
-          <h1 className="add-cheese-h1">Contribute please:</h1>
-          <ButtonMain text="RETURN" buttonFunction={navigateToCheeses} />
-        </div>
+        <h1 className="add-cheese-h1">Contribute please</h1>
         <h2 className="form-h2">Cheese name:</h2>
         <Input
           type="text"
@@ -64,18 +61,18 @@ export default function AddCheese() {
           errorMessage={getErrorMessage("picture")}
         />
         <div className="submit-section">
-          {state.isLoading ? (
-            <h3 className="post-loading-h3">Loading...</h3>
-          ) : (
-            <></>
-          )}
           <ButtonMain
             text="ADD THE CHEESE"
             buttonFunction={() => fetchPost(validationState.body)}
             disabled={!isValid()}
           />
+          <ButtonMain text="RETURN" buttonFunction={navigateToCheeses} />
         </div>
-        <div></div>
+        {state.isLoading ? (
+          <h3 className="post-loading-h3">Loading...</h3>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

@@ -47,7 +47,7 @@ function reducer(state, action) {
           error: null,
         };
       });
-      console.log("VAL STATUS", validationStatus);
+      // console.log("VAL STATUS", validationStatus);
       return {
         ...state,
         validationStatus: validationStatus,
