@@ -12,19 +12,16 @@ export default function Cheeses() {
 
   const state = useFetchGet(cheesesURL);
 
-  // console.log('CHEESE STATE', state)
-
-  function navigateToAddCheese() {
-    navigate('/addcheese')
-  }
-
   return (
-    <div className="WrapperHomeCheese">
-      <NavigationBar buttonText="LOGIN" />
-      <div className="MiddleSectionCheese">
+    <div className="wrapper">
+      <NavigationBar/>
+      <div className="middle-section">
         <div className="section-space-between">
           <h1 className="CheesesPageH1">Behold - the cheeses:</h1>
-          <ButtonMain text="ADD CHEESE +" buttonFunction={navigateToAddCheese} />
+          <ButtonMain
+            text="ADD CHEESE +"
+            buttonFunction={() => navigate("/addcheese")}
+          />
         </div>
         <div className="CheeseRenders">
           {state.isLoading ? (
@@ -34,6 +31,8 @@ export default function Cheeses() {
               content={state.data.map((cheese) => (
                 <Card
                   key={cheese._id}
+                  id={cheese._id}
+                  handleClick={() => navigate(`/cheese/${cheese._id}`)}
                   image={cheese.picture}
                   altText={cheese.name}
                   cheeseName={cheese.name}
@@ -46,6 +45,3 @@ export default function Cheeses() {
     </div>
   );
 }
-
-// state.data.map((cheese) =>
-// <li>{cheese.name}</li>)

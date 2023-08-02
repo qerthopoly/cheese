@@ -56,7 +56,7 @@ app.post("/cheese", isLoggedIn, async (req, res, next) => {
   }
 });
 
-app.get("/cheese/:id", isLoggedIn, async (req, res, next) => {
+app.get("/cheese/:id", async (req, res) => {
   const cheeseID = req.params.id;
 
   try {

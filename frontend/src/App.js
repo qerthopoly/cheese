@@ -8,6 +8,7 @@ import AddCheese from "./routes/AddCheese";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import AuthProvider from "./contexts/AuthContext";
+import CheeseAbout from "./routes/CheeseAbout.js";
 
 const routes = createBrowserRouter([
   {
@@ -33,6 +34,11 @@ const routes = createBrowserRouter([
   {
     path: "/addcheese",
     element: <AddCheese />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/cheese/:id",
+    element: <CheeseAbout />,
     errorElement: <ErrorPage />,
   },
 ]);

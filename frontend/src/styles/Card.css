@@ -1,43 +1,80 @@
-.Card {
+.card {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 5px;
 }
 
-.CardImage {
+.card-image {
   object-fit: cover;
   height: 200px;
   width: 100%;
   /* background-color: darkolivegreen; */
 }
 
-.CardText {
+.title-link {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+  /* white-space: nowrap; */
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  cursor: pointer;
+  color: #261f1f;
+  transition: 0.3s;
+}
+
+.title-link:hover {
+  color: #a93c2f;
+}
+
+.card-content {
   display: flex;
   /* width: 100%; */
+  gap: 10px;
   align-items: center;
   justify-content: space-between;
   padding: 10px 15px 10px 15px;
 }
 
-.CardTitle {
+.card-title {
   margin: 0px;
 }
 
-.LikesSection {
+.likes-section {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 5px;
 }
 
-.HeartSymbol {
+.heart-symbol {
   margin: 0px;
   font-size: 1.6em;
   color: #a93c2f;
   /* fill: #a93c2f; */
 }
 
-.NumberOfLikes {
+.number-of-likes {
   margin: 0px;
   font-size: 1.4em;
+}
+
+@media (min-width: 768px) {
+  .number-of-likes {
+    font-size: 1.6em;
+  }
+
+  .heart-symbol {
+    font-size: 1.8em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .number-of-likes {
+    font-size: 1.8em;
+  }
+
+  .heart-symbol {
+    font-size: 2em;
+  }
 }

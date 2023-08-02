@@ -33,9 +33,9 @@ export default function AddCheese() {
 
 
   return (
-    <div className="wrapper-add-cheese">
+    <div className="wrapper">
       <NavigationBar buttonText="LOGIN" />
-      <div className="middle-section-add-cheese">
+      <div className="middle-section">
         <h1 className="add-cheese-h1">Contribute please</h1>
         <h2 className="form-h2">Cheese name:</h2>
         <Input

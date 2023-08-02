@@ -15,25 +15,26 @@ export default function Login() {
 
   const { setIsLoggedIn } = useContext(AuthContext);
 
-  const { state, fetchPost } = useFetchPost(usersURL, succesfullLogin);
+  const { state, fetchPost } = useFetchPost(usersURL, successfullLogin);
 
   function navigateToRegister() {
     navigate("/register");
   }
 
-  function succesfullLogin(data) {
+  function successfullLogin(data) {
     const JWTtoken = data.token;
     const user_id = data.user_id;
     const nickname = data.nickname;
     sessionStorage.setItem("jwtToken", JWTtoken);
     sessionStorage.setItem("user_id", user_id);
     sessionStorage.setItem("nickname", nickname);
+
+    setIsLoggedIn(true);
+    navigate("/home");
   }
 
   function handleLogin() {
     fetchPost(user);
-    setIsLoggedIn(true);
-    navigate("/home");
   }
 
   return (

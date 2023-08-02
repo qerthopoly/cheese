@@ -1,7 +1,8 @@
 .CheesesPageH1,
 .add-cheese-h1,
 .login-h1,
-.register-h1 {
+.register-h1,
+.about-cheese-h1 {
   text-align: left;
   font-size: 1.4em;
 }
@@ -11,6 +12,24 @@
 .register-h1 {
   text-align: center;
 }
+
+.about-cheese-h1 {
+  text-transform: uppercase;
+}
+
+.section-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.section-bottom-border {
+  border-bottom: 1px solid #261f1f;
+}
+
+
 
 .form-h2,
 .login-h2,
@@ -26,10 +45,9 @@
   color: dimgrey;
 }
 
-.WrapperHomeCheese,
-.wrapper-add-cheese,
 .wrapper-login,
-.wrapper-register {
+.wrapper-register,
+.wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,10 +55,15 @@
   width: 100%;
 }
 
-.MiddleSectionCheese,
-.middle-section-add-cheese,
+/* .wrapper-one-cheese {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+
 .middle-section-login,
-.middle-section-register {
+.middle-section-register,
+.middle-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,13 +75,6 @@
 .middle-section-login,
 .middle-section-register {
   width: 300px;
-}
-
-.section-space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
 }
 
 .CheeseRenders {
@@ -93,7 +109,8 @@
   .CheesesPageH1,
   .add-cheese-h1,
   .login-h1,
-  .register-h1 {
+  .register-h1,
+  .about-cheese-h1 {
     font-size: 1.7em;
   }
 
@@ -123,7 +140,8 @@
   .CheesesPageH1,
   .add-cheese-h1,
   .login-h1,
-  .register-h1 {
+  .register-h1,
+  .about-cheese-h1 {
     font-size: 2em;
   }
 
@@ -144,5 +162,13 @@
 
   .is-loading-text {
     font-size: 1.8em;
+  }
+
+  .about-cheese-section {
+    flex-direction: row;
+  }
+
+  .about-cheese-img {
+    width: 60%;
   }
 }

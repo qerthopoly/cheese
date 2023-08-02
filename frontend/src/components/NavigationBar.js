@@ -16,6 +16,8 @@ export default function NavigationBar() {
 
   function logoutUser() {
     sessionStorage.removeItem("jwtToken");
+    sessionStorage.removeItem("user_id");
+    sessionStorage.removeItem("nickname");
     setIsLoggedIn(false);
     navigate("/");
   }
