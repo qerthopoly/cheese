@@ -37,12 +37,22 @@
 /* DESKTOP */
 
 @media (min-width: 1024px) {
+
+  .wrapper-one-cheese {
+    height: 510px;
+  }
+
   .about-cheese-section {
     flex-direction: row;
   }
 
   .about-cheese-img {
-    width: 60%;
-    max-height: 450px;
+    flex-basis: 40%;
+    width: 450px;
+    height: 350px;
+  }
+
+  .about-cheese-text {
+    flex-basis: 60%;
   }
 }

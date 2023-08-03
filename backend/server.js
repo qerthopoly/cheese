@@ -38,14 +38,18 @@ app.get("/cheese", async (req, res) => {
 app.post("/cheese", isLoggedIn, async (req, res, next) => {
   const newCheese = req.body;
 
-  const idFromToken = Math.floor(Math.random() * 1001); // change it later!
+  // const idFromToken = Math.floor(Math.random() * 1001);
+
+  const userID = req.myData.user_id
+  console.log('POST CHEESE', userID)
 
   try {
     const dbRes = await cheeseDB.insertOne({
       name: newCheese.name,
       description: newCheese.description,
       picture: newCheese.picture,
-      creator_id: idFromToken, // how to put ID from token here?
+      creator_id: new ObjectId(userID)
+      // creator_id: idFromToken
     });
     if (dbRes.acknowledged) {
       console.log("Cheese added successfully!");
@@ -83,13 +87,13 @@ app.get("/users", async (req, res) => {
   }
 });
 
+///// LOGIN AND REGISTER /////
+
 const loggingSchema = joi.object({
   nickname: joi.string().required(),
   password: joi.string().required(),
   email: joi.string().email().trim().lowercase(),
 });
-
-///// LOGIN AND REGISTER /////
 
 app.post("/register", async (req, res) => {
   let newUser = req.body;
@@ -173,19 +177,31 @@ app.post("/login", async (req, res) => {
   });
 });
 
-app.post("/comments", (req, res) => {
+app.get("/comments", async (req, res) => {
+  try {
+    const data = await commentsDB.find().toArray();
+    return res.send(data);
+  } catch {
+    return res.status(500).send({ error: "Error while loading comments" });
+  }
+});
+
+app.post("/comments", isLoggedIn, async (req, res, next) => {
   const newComment = req.body;
   const currentDate = new Date();
-  const idFromToken = Math.floor(Math.random() * 1001);
-  const cheeseIDfromParams = Math.floor(Math.random() * 1001);
+  const userID = req.myData.user_id; // HOW CAN I TRANSFER user_id FROM app.get("/posts")?
+  const cheeseID = req.body.id;
+
+  console.log('USER ID COMM', userID)
 
   try {
-    const dbRes = commentsDB.insertOne({
-      user_id: idFromToken,
+    const dbRes = await commentsDB.insertOne({
+      user_id: new ObjectId(userID),
       comment: newComment.comment,
       date: currentDate.toISOString(),
-      cheese_id: cheeseIDfromParams,
+      cheese_id: new ObjectId(cheeseID),
     });
+    return res.send(dbRes);
   } catch {
     return res.status(500).send({ error: "Error while posting comment" });
   }
@@ -194,15 +210,16 @@ app.post("/comments", (req, res) => {
 app.get("/posts", isLoggedIn, (req, res, next) => {
   const userData = req.myData;
 
+  console.log('myDATA', userData)
+
   res.json({
     user_id: userData.user_id,
     nickname: userData.nickname,
   });
 });
 
-// app.get("/comments", async (req, res) => {
 
-// })
+
 
 function start() {
   console.log(`

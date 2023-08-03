@@ -32,12 +32,15 @@ function reducer(state, action) {
 export default function useFetchPost(URL, successCallBack) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const jwtToken = sessionStorage.getItem("jwtToken");
+
   function fetchPost(body) {
     dispatch({ type: "FETCH_START" });
     fetch(URL, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`,
       },
       body: JSON.stringify(body),
     })
@@ -45,7 +48,7 @@ export default function useFetchPost(URL, successCallBack) {
       .then((data) => {
         if (data.error) {
           dispatch({ type: "FETCH_ERROR" });
-          return console.log('Fetch post error', data.message);
+          return console.log("Fetch post error", data.message);
         } else {
           dispatch({ type: "FETCH_SUCCESS" });
           successCallBack(data);

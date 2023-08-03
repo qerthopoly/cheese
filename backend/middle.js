@@ -5,7 +5,7 @@ const JWT_KEY = process.env.JWT_SECRET;
 
 module.exports = {
   isLoggedIn: (req, res, next) => {
-    // console.log('isLoggedIn happened')
+    console.log("isLoggedIn happened");
 
     try {
       const authToken = req.headers.authorization.replace(/Bearer /gm, "");
@@ -14,7 +14,7 @@ module.exports = {
 
       req.myData = verify;
 
-    //   console.log("VERIFY", verify)
+      console.log("VERIFY happened", verify);
 
       next();
     } catch (error) {
