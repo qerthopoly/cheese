@@ -29,8 +29,6 @@
   border-bottom: 1px solid #261f1f;
 }
 
-
-
 .form-h2,
 .login-h2,
 .register-h2 {
@@ -43,6 +41,16 @@
   font-size: 1em;
   margin: 0px;
   color: dimgrey;
+}
+
+.paragraph {
+  text-align: end;
+  font-size: 0.9em;
+}
+
+.paragraph-center {
+  text-align: center;
+  font-size: 0.9em;
 }
 
 .wrapper-login,
@@ -124,6 +132,10 @@
     font-size: 1.3em;
   }
 
+  .paragraph, .paragraph-center {
+    font-size: 1em;
+  }
+
   .middle-section-login,
   .middle-section-register {
     width: 500px;
@@ -153,6 +165,10 @@
 
   .post-loading-h3 {
     font-size: 1.6em;
+  }
+  
+  .paragraph .paragraph-center {
+    font-size: 1.2em;
   }
 
   .middle-section-login,

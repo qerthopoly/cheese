@@ -17,7 +17,9 @@ export default function TextArea({
         onBlur={onBlur}
         rows="4"
       ></textarea>
-	  <span className="textarea-error-message">{errorMessage}</span>
+      {errorMessage && (
+        <span className="textarea-error-message">{errorMessage}</span>
+      )}
     </div>
   );
 }

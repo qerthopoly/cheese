@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 const initialState = {
   data: [],
@@ -57,6 +57,9 @@ function reducer(state, action) {
 
 export default function useFetchGet(URL, sort) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [counter, setCounter] = useState(0)
+
+	const handleUpdate = () => setCounter(counter + 1)
 
   const jwtToken = sessionStorage.getItem("jwtToken");
 
@@ -86,7 +89,7 @@ export default function useFetchGet(URL, sort) {
     }
 
     fetchData();
-  }, [URL, sort, jwtToken]);
+  }, [URL, sort, jwtToken, counter]);
 
-  return state;
+  return {state, update: handleUpdate};
 }

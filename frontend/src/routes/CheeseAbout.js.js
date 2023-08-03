@@ -3,30 +3,43 @@ import NavigationBar from "../components/NavigationBar";
 import useFetchGet from "../hooks/useFetchGet";
 import ButtonMain from "../components/ButtonMain";
 import "../styles/CheeseAbout.css";
-import useFetchPost from "../hooks/useFetchPost";
+import CommentsBox from "../components/CommentsBox";
 import Comments from "../components/Comments";
+// import { useEffect, useState } from "react";
+import CommentAdd from "../components/CommentAdd";
+import useFetchPost from "../hooks/useFetchPost";
+import { useContext, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import TextArea from "../components/TextArea";
+import { useFetchDelete } from "../hooks/useFetchDelete";
 
 export default function CheeseAbout() {
   const { id } = useParams();
-  console.log("ID", id);
+  // console.log("ID", id);
   const cheeseURL = `http://localhost:9998/cheese/${id}`;
-  const commentsURL = "http://localhost:9998/comments";
+  const postCommentsURL = `http://localhost:9998/comments`;
+  const getCommentsURL = `http://localhost:9998/comments/${id}`;
 
-  const cheeseState = useFetchGet(cheeseURL);
-  const commentsState = useFetchGet(commentsURL);
-
-  function comments() {
-    const commentsAboutCheese = commentsState.data.filter(
-      (comment) => comment.cheese_id === id
-    );
-    return commentsAboutCheese
-  }
-
-  comments();
-
-  // const { state, fetchPost } = useFetchPost(usersURL, navigateReturnToLogin);
+  const { state: cheeseState } = useFetchGet(cheeseURL);
+  const { state: commentsState, update } = useFetchGet(getCommentsURL);
 
   const navigate = useNavigate();
+
+  const [body, setBody] = useState([]);
+
+  const { isLoggedIn } = useContext(AuthContext);
+
+  const { state, fetchPost } = useFetchPost(postCommentsURL, update);
+
+  function handleSubmit() {
+    fetchPost(body);
+  }
+
+  const fetchDelete = useFetchDelete(postCommentsURL, update);
+
+  function deleteComment(commentID, userID) {
+    fetchDelete(commentID);
+  }
 
   return (
     <div className="wrapper">
@@ -64,7 +77,55 @@ export default function CheeseAbout() {
         {commentsState.isLoading ? (
           <h2 className="is-loading-text">Loading...</h2>
         ) : (
-          <Comments />
+          <div>
+            <CommentsBox
+              numberOfComments={commentsState.data.length}
+              comments={commentsState.data.map((comment, index) => (
+                <Comments
+                  key={index}
+                  name={comment.user_id}
+                  date={comment.date}
+                  comment={comment.comment}
+                  buttonId={comment.user_id}
+                  deleteFunction={() =>
+                    deleteComment(comment._id, comment.user_id)
+                  }
+                />
+              ))}
+            />
+
+            {isLoggedIn ? (
+              <CommentAdd
+                textArea={
+                  <TextArea
+                    onChange={(e) =>
+                      setBody({
+                        ...body,
+                        comment: e.target.value,
+                        cheese_id: id,
+                      })
+                    }
+                    placeholder="Comment"
+                  />
+                }
+                buttonFunction={handleSubmit}
+              />
+            ) : (
+              <p className="paragraph-center">Log in to add comment</p>
+            )}
+            {state.isLoading ? (
+              <h2 className="is-loading-text">Loading...</h2>
+            ) : (
+              <></>
+            )}
+            {state.error ? (
+              <h2 className="is-loading-text">
+                Please fill the form correctly
+              </h2>
+            ) : (
+              <></>
+            )}
+          </div>
         )}
       </div>
     </div>

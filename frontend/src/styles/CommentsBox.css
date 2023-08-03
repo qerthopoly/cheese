@@ -1,0 +1,14 @@
+.comment-info {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+	margin-bottom: 20px;
+}
+
+.comment-name-h3 {
+	margin: 0px;
+}
+
+.comment-p {
+	margin: 0px;
+}

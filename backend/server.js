@@ -37,19 +37,14 @@ app.get("/cheese", async (req, res) => {
 
 app.post("/cheese", isLoggedIn, async (req, res, next) => {
   const newCheese = req.body;
-
-  // const idFromToken = Math.floor(Math.random() * 1001);
-
-  const userID = req.myData.user_id
-  console.log('POST CHEESE', userID)
+  const userID = req.myData.user_id;
 
   try {
     const dbRes = await cheeseDB.insertOne({
       name: newCheese.name,
       description: newCheese.description,
       picture: newCheese.picture,
-      creator_id: new ObjectId(userID)
-      // creator_id: idFromToken
+      creator_id: new ObjectId(userID),
     });
     if (dbRes.acknowledged) {
       console.log("Cheese added successfully!");
@@ -84,6 +79,115 @@ app.get("/users", async (req, res) => {
     return res.send(data);
   } catch {
     res.status(500).send({ error: "Error while loading users" });
+  }
+});
+
+app.get("/comments/:cheese_id", async (req, res) => {
+  const cheeseID = req.params.cheese_id;
+
+  try {
+    const data = await commentsDB
+      .find({ cheese_id: new ObjectId(cheeseID) })
+      .toArray();
+    return res.send(data);
+  } catch {
+    return res.status(500).send({ error: "Error while loading comments" });
+  }
+});
+
+app.post("/comments", isLoggedIn, async (req, res, next) => {
+  const newComment = req.body;
+
+  const currentDate = new Date();
+  const userID = req.myData.user_id;
+  const nickname = req.myData.nickname;
+  const cheeseID = newComment.cheese_id;
+  const comment = newComment.comment;
+
+  console.log("USER ID COMM", userID);
+
+  try {
+    const dbRes = await commentsDB.insertOne({
+      user_id: new ObjectId(userID),
+      nickname: nickname,
+      comment: comment,
+      date: currentDate.toISOString(),
+      cheese_id: new ObjectId(cheeseID),
+    });
+    return res.send(dbRes);
+  } catch {
+    return res.status(500).send({ error: "Error while posting comment" });
+  }
+});
+
+app.delete("/comments/:comment_id", isLoggedIn, async (req, res, next) => {
+  const commentID = req.params.comment_id;
+
+  try {
+    const findComment = await commentsDB.findOne({
+      _id: new ObjectId(commentID),
+    });
+
+    console.log("DELETE COMMENT", findComment);
+
+    if (findComment === null) {
+      return res.status(500).send({ error: "This comment does not exist" });
+    } else {
+      const dbRes = commentsDB.deleteOne({ _id: new ObjectId(commentID) });
+      return res.send(dbRes);
+    }
+  } catch {
+    return res.status(500).send({ error: "Error while deleting membership" });
+  }
+});
+
+app.get("/likes", async (req, res) => {
+
+  try {
+    const data = await likesDB.find().toArray()
+    console.log("LIKES", data)
+    return res.send(data)
+  } catch {
+    return res.status(500).send({ error: "Error while loading likes yo" });
+  }
+});
+
+app.get("/likes/:cheese_id", async (req, res) => {
+  const cheeseID = req.params.cheese_id;
+  console.log('CHEESE_ID', cheeseID)
+  try {
+    const data = await likesDB.find({cheese_id: new ObjectId(cheeseID)}).toArray() // HOW TO FIND ALL CHEESES WITH cheeseID?
+    console.log("LIKES ONE", data)
+    return res.send(data)
+  } catch {
+    return res.status(500).send({ error: "Error while loading likes yoo" });
+  }
+});
+
+app.post("/likes/:cheese_id", isLoggedIn, async (req, res, next) => {
+  const cheeseID = req.params.cheese_id;
+  const userID = req.myData.user_id;
+
+  try {
+    const findCheese = await likesDB.findOne({
+      cheese_id: new ObjectId(cheeseID),
+      user_id: new ObjectId(userID),
+    });
+    if (findCheese === null) {
+      const dbRes = await likesDB.insertOne({
+        cheese_id: new ObjectId(cheeseID),
+        user_id: new ObjectId(userID),
+      });
+      return res.send(dbRes);
+    } else {
+      const dbRes = await likesDB.deleteOne({
+        cheese_id: new ObjectId(cheeseID),
+        user_id: new ObjectId(userID),
+      });
+      return res.send(dbRes);
+    }
+  } catch {
+    return res.status(500).send({ error: "Error while loading likes" });
   }
 });
 
@@ -177,49 +281,16 @@ app.post("/login", async (req, res) => {
   });
 });
 
-app.get("/comments", async (req, res) => {
-  try {
-    const data = await commentsDB.find().toArray();
-    return res.send(data);
-  } catch {
-    return res.status(500).send({ error: "Error while loading comments" });
-  }
-});
-
-app.post("/comments", isLoggedIn, async (req, res, next) => {
-  const newComment = req.body;
-  const currentDate = new Date();
-  const userID = req.myData.user_id; // HOW CAN I TRANSFER user_id FROM app.get("/posts")?
-  const cheeseID = req.body.id;
-
-  console.log('USER ID COMM', userID)
-
-  try {
-    const dbRes = await commentsDB.insertOne({
-      user_id: new ObjectId(userID),
-      comment: newComment.comment,
-      date: currentDate.toISOString(),
-      cheese_id: new ObjectId(cheeseID),
-    });
-    return res.send(dbRes);
-  } catch {
-    return res.status(500).send({ error: "Error while posting comment" });
-  }
-});
-
 app.get("/posts", isLoggedIn, (req, res, next) => {
   const userData = req.myData;
 
-  console.log('myDATA', userData)
+  console.log("myDATA", userData);
 
   res.json({
     user_id: userData.user_id,
     nickname: userData.nickname,
   });
 });
-
-
-
 
 function start() {
   console.log(`

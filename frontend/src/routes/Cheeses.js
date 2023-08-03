@@ -5,23 +5,31 @@ import useFetchGet from "../hooks/useFetchGet";
 import Card from "../components/Card";
 import Grid from "../components/Grid";
 import ButtonMain from "../components/ButtonMain";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function Cheeses() {
   const cheesesURL = "http://localhost:9998/cheese";
   const navigate = useNavigate();
 
-  const state = useFetchGet(cheesesURL);
+  const { isLoggedIn } = useContext(AuthContext);
+
+  const {state} = useFetchGet(cheesesURL);
 
   return (
     <div className="wrapper">
-      <NavigationBar/>
+      <NavigationBar />
       <div className="middle-section">
         <div className="section-space-between">
           <h1 className="CheesesPageH1">Behold - the cheeses:</h1>
-          <ButtonMain
-            text="ADD CHEESE +"
-            buttonFunction={() => navigate("/addcheese")}
-          />
+          {isLoggedIn ? (
+            <ButtonMain
+              text="ADD CHEESE +"
+              buttonFunction={() => navigate("/addcheese")}
+            />
+          ) : (
+            <p className="paragraph">Log in to add cheese</p>
+          )}
         </div>
         <div className="CheeseRenders">
           {state.isLoading ? (

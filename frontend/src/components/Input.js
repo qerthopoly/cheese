@@ -16,7 +16,9 @@ export default function Input({
         onChange={onChange}
         onBlur={onBlur}
       />
-	  <span className="input-error-message">{errorMessage}</span>
+      {errorMessage && (
+        <span className="input-error-message">{errorMessage}</span>
+      )}
     </div>
   );
 }

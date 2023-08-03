@@ -1,10 +1,18 @@
-export default function Comments() {
+import "../styles/CommentsBox.css";
+import ButtonMain from "./ButtonMain";
+
+export default function Comments({ name, date, comment, buttonId, deleteFunction }) {
   return (
-    <div>
-      <div className="section-space-between section-bottom-border">
-        <h1 className="about-cheese-h1">COMMENTS</h1>
-        <p className="number-of-likes">6</p>
+      <div className="comments-section">
+        <div className="comment-info">
+          <h3 className="comment-name-h3">{name}</h3>
+          <p className="comment-p">{date}</p>
+        </div>
+		<div className="section-space-between">
+        <p className="comment-content">{comment}</p>
+		<ButtonMain text='X' id={buttonId} buttonFunction={deleteFunction}/>
+		</div>
+
       </div>
-    </div>
   );
 }
