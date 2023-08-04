@@ -1,4 +1,5 @@
 import "../styles/Card.css";
+import Likes from "./Likes";
 
 export default function Card({ id, image, altText, cheeseName, handleClick }) {
   return (
@@ -9,8 +10,7 @@ export default function Card({ id, image, altText, cheeseName, handleClick }) {
           <h3 className="card-title">{cheeseName} ⇢</h3>
         </button>
         <div className="likes-section">
-          <p className="heart-symbol">♡</p>
-          <p className="number-of-likes">6</p>
+          <Likes cheese_id={id} />
         </div>
       </div>
     </div>

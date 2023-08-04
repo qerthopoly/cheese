@@ -5,6 +5,7 @@ export default function Input({
   placeholder,
   onChange,
   onBlur,
+  initialValue,
   errorMessage,
 }) {
   return (
@@ -15,6 +16,7 @@ export default function Input({
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
+        defaultValue={initialValue} 
       />
       {errorMessage && (
         <span className="input-error-message">{errorMessage}</span>

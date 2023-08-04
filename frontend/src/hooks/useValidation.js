@@ -123,6 +123,7 @@ export default function useValidation(validationRules) {
   }
 
   function isValid() {
+    console.log('VALIDATION IS VALID', state)
     return Object.values(state.validationStatus).every(
       (status) => status.is_valid
     );

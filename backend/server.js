@@ -55,6 +55,37 @@ app.post("/cheese", isLoggedIn, async (req, res, next) => {
   }
 });
 
+app.put("/cheese/:id", isLoggedIn, async (req, res, next) => {
+  const updatesCheese = req.body;
+  const cheeseID = req.params.id;
+  const userID = req.myData.user_id;
+
+  try {
+    const dbRes = await cheeseDB.updateOne(
+      { _id: new ObjectId(cheeseID), 
+        // creator_id: new ObjectId(userID)
+      },
+      {
+        $set: {
+          name: updatesCheese.name,
+          description: updatesCheese.description,
+          picture: updatesCheese.picture,
+        },
+      }
+    );
+
+    if (dbRes.acknowledged && dbRes.matchedCount > 0) {
+      return res.send({ message: "Cheese updated successfully" });
+    } else {
+      return res
+        .status(500)
+        .send({ error: "Cheese was not found or user is not logged in" });
+    }
+  } catch {
+    return res.status(500).send({ error: "Error while updating the cheese" });
+  }
+});
+
 app.get("/cheese/:id", async (req, res) => {
   const cheeseID = req.params.id;
 
@@ -84,12 +115,27 @@ app.get("/users", async (req, res) => {
 
 app.get("/comments/:cheese_id", async (req, res) => {
   const cheeseID = req.params.cheese_id;
-
   try {
     const data = await commentsDB
-      .find({ cheese_id: new ObjectId(cheeseID) })
+      .aggregate([
+        {
+          $match: { cheese_id: new ObjectId(cheeseID) },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "user_id",
+            foreignField: "_id",
+            as: "user_info",
+          },
+        },
+      ])
       .toArray();
-    return res.send(data);
+    const newData = data.map((comment_with_user_info) => {
+      const { user_info, ...comment } = comment_with_user_info;
+      return { ...comment, nickname: user_info[0].nickname };
+    });
+    return res.send(newData);
   } catch {
     return res.status(500).send({ error: "Error while loading comments" });
   }
@@ -100,7 +146,7 @@ app.post("/comments", isLoggedIn, async (req, res, next) => {
 
   const currentDate = new Date();
   const userID = req.myData.user_id;
-  const nickname = req.myData.nickname;
+  // const nickname = req.myData.nickname;
   const cheeseID = newComment.cheese_id;
   const comment = newComment.comment;
 
@@ -109,7 +155,7 @@ app.post("/comments", isLoggedIn, async (req, res, next) => {
   try {
     const dbRes = await commentsDB.insertOne({
       user_id: new ObjectId(userID),
-      nickname: nickname,
+      // nickname: nickname,
       comment: comment,
       date: currentDate.toISOString(),
       cheese_id: new ObjectId(cheeseID),
@@ -141,24 +187,44 @@ app.delete("/comments/:comment_id", isLoggedIn, async (req, res, next) => {
   }
 });
 
-app.get("/likes", async (req, res) => {
+// app.get("/likes", async (req, res) => {
 
-  try {
-    const data = await likesDB.find().toArray()
-    console.log("LIKES", data)
-    return res.send(data)
-  } catch {
-    return res.status(500).send({ error: "Error while loading likes yo" });
-  }
-});
+//   try {
+//     const data = await likesDB.find().toArray()
+//     console.log("LIKES", data)
+//     return res.send(data)
+//   } catch {
+//     return res.status(500).send({ error: "Error while loading likes yo" });
+//   }
+// });
 
 app.get("/likes/:cheese_id", async (req, res) => {
   const cheeseID = req.params.cheese_id;
-  console.log('CHEESE_ID', cheeseID)
   try {
-    const data = await likesDB.find({cheese_id: new ObjectId(cheeseID)}).toArray() // HOW TO FIND ALL CHEESES WITH cheeseID?
-    console.log("LIKES ONE", data)
-    return res.send(data)
+    const data = await likesDB
+      .find({ cheese_id: new ObjectId(cheeseID) })
+      .toArray();
+    // console.log("LIKES NOT LOGGED SERVER", data);
+    const response = { numberOfLikes: data.length, likedByUser: false };
+    return res.send(response);
+  } catch {
+    return res.status(500).send({ error: "Error while loading likes yoo" });
+  }
+});
+
+app.get("/likes_user/:cheese_id", isLoggedIn, async (req, res, next) => {
+  const cheeseID = req.params.cheese_id;
+  const userID = req.myData.user_id;
+  try {
+    const data = await likesDB
+      .find({ cheese_id: new ObjectId(cheeseID) })
+      .toArray();
+    // console.log("LIKES LOGGED SERVER", data);
+    const isItLiked = data.some((like) =>
+      like.user_id.equals(new ObjectId(userID))
+    );
+    const response = { numberOfLikes: data.length, likedByUser: isItLiked };
+    return res.send(response);
   } catch {
     return res.status(500).send({ error: "Error while loading likes yoo" });
   }
@@ -178,13 +244,13 @@ app.post("/likes/:cheese_id", isLoggedIn, async (req, res, next) => {
         cheese_id: new ObjectId(cheeseID),
         user_id: new ObjectId(userID),
       });
-      return res.send(dbRes);
+      return res.send({ liked: true });
     } else {
       const dbRes = await likesDB.deleteOne({
         cheese_id: new ObjectId(cheeseID),
         user_id: new ObjectId(userID),
       });
-      return res.send(dbRes);
+      return res.send({ liked: false });
     }
   } catch {
     return res.status(500).send({ error: "Error while loading likes" });

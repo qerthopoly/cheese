@@ -37,22 +37,7 @@
   color: white;
 }
 
-.MainButton {
-  background-color: #a93c2f;
-  color: white;
-  font-size: 0.7em;
-  letter-spacing: 2px;
-  font-weight: bolder;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  transition: 0.1s;
-  white-space: nowrap;
-}
 
-.MainButton:hover {
-  background: #9b372c;
-}
 
 .CheeseLogo {
   margin-left: 10px;

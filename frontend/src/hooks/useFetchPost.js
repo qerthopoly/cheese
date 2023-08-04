@@ -29,7 +29,7 @@ function reducer(state, action) {
   }
 }
 
-export default function useFetchPost(URL, successCallBack) {
+export default function useFetchPost(URL, successCallBack, useFetchPut) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const jwtToken = sessionStorage.getItem("jwtToken");
@@ -37,7 +37,7 @@ export default function useFetchPost(URL, successCallBack) {
   function fetchPost(body) {
     dispatch({ type: "FETCH_START" });
     fetch(URL, {
-      method: "POST",
+      method: useFetchPut ? "PUT" : "POST",
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${jwtToken}`,

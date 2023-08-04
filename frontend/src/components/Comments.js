@@ -1,4 +1,5 @@
 import "../styles/CommentsBox.css";
+import ButtonDelete from "./ButtonDelete";
 import ButtonMain from "./ButtonMain";
 
 export default function Comments({ name, date, comment, buttonId, deleteFunction }) {
@@ -10,7 +11,7 @@ export default function Comments({ name, date, comment, buttonId, deleteFunction
         </div>
 		<div className="section-space-between">
         <p className="comment-content">{comment}</p>
-		<ButtonMain text='X' id={buttonId} buttonFunction={deleteFunction}/>
+		<ButtonDelete text='X' id={buttonId} buttonFunction={deleteFunction}/>
 		</div>
 
       </div>

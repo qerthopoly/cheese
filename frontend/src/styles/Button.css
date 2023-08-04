@@ -1,0 +1,51 @@
+.main-button,
+.delete-button {
+	background-color: #a93c2f;
+	color: white;
+	font-size: 0.7em;
+	font-weight: bolder;
+	border: none;
+	transition: 0.1s;
+}
+
+.main-button {
+	letter-spacing: 2px;
+	padding: 10px;
+	border-radius: 5px;
+	white-space: nowrap;
+}
+
+.delete-button {
+	height: 20px;
+	width: 20px;
+	border-radius: 10px;
+
+}
+
+.main-button:hover,
+.delete-button:hover {
+	background: #9b372c;
+}
+
+
+
+
+/* TABLETS */
+
+@media (min-width: 768px) {
+
+	.MainButton {
+		padding: 10px 20px 10px 20px;
+	}
+
+}
+
+/* DESKTOP */
+
+@media (min-width: 1024px) {
+
+	.MainButton {
+		padding: 10px 30px 10px 30px;
+	}
+
+}

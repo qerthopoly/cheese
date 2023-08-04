@@ -1,0 +1,25 @@
+/* .heart-wrapper {
+	position: relative;
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+  } */
+
+/* .empty-heart,
+.filled-heart {
+	position: absolute;
+	top: 0;
+	left: 0;
+} */
+
+.empty-heart {
+	fill: #a93c2f;
+	height: 20px;
+	width: 20px;
+}
+
+.filled-heart {
+	fill: #a93c2f;
+	height: 20px;
+	width: 20px;
+}

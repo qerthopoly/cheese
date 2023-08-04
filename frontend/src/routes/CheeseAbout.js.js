@@ -12,10 +12,14 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import TextArea from "../components/TextArea";
 import { useFetchDelete } from "../hooks/useFetchDelete";
+import HeartSymbol from "../components/HeartSymbol";
+import Likes from "../components/Likes";
 
 export default function CheeseAbout() {
   const { id } = useParams();
-  // console.log("ID", id);
+
+  const { isLoggedIn } = useContext(AuthContext);
+
   const cheeseURL = `http://localhost:9998/cheese/${id}`;
   const postCommentsURL = `http://localhost:9998/comments`;
   const getCommentsURL = `http://localhost:9998/comments/${id}`;
@@ -26,8 +30,6 @@ export default function CheeseAbout() {
   const navigate = useNavigate();
 
   const [body, setBody] = useState([]);
-
-  const { isLoggedIn } = useContext(AuthContext);
 
   const { state, fetchPost } = useFetchPost(postCommentsURL, update);
 
@@ -51,10 +53,7 @@ export default function CheeseAbout() {
           <div className="wrapper-one-cheese">
             <div className="section-space-between section-bottom-border">
               <h1 className="about-cheese-h1">{cheeseState.data.name}</h1>
-              <div className="likes-section">
-                <p className="heart-symbol">♡</p>
-                <p className="number-of-likes">6</p>
-              </div>
+              <Likes cheese_id={id} />
             </div>
             <div className="about-cheese-section">
               <img
@@ -66,10 +65,20 @@ export default function CheeseAbout() {
                 <p className="about-cheese-description">
                   {cheeseState.data.description}
                 </p>
-                <ButtonMain
-                  text="RETURN TO CHEESES"
-                  buttonFunction={() => navigate("/home")}
-                />
+                <div className="button-wrapper">
+                  {isLoggedIn ? (
+                    <ButtonMain
+                      text="EDIT"
+                      buttonFunction={() => navigate(`/cheese_update/${id}`)}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  <ButtonMain
+                    text="RETURN"
+                    buttonFunction={() => navigate("/home")}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -83,8 +92,8 @@ export default function CheeseAbout() {
               comments={commentsState.data.map((comment, index) => (
                 <Comments
                   key={index}
-                  name={comment.user_id}
-                  date={comment.date}
+                  name={comment.nickname}
+                  date={comment.date.split("T")[0]}
                   comment={comment.comment}
                   buttonId={comment.user_id}
                   deleteFunction={() =>
