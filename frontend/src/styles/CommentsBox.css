@@ -1,0 +1,47 @@
+.comment-box {
+  margin-top: 20px
+}
+
+.comment-info {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.comment-name-h3 {
+  margin: 0px;
+  font-size: 1em;
+}
+
+.comment-p {
+  margin: 0px;
+}
+
+/* TABLET */
+
+@media (min-width: 768px) {
+  .comment-info {
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+
+  .comment-name-h3 {
+    font-size: 1.2em;
+  }
+}
+
+/* DESKTOP */
+
+@media (min-width: 1024px) {
+  .comment-name-h3 {
+    font-size: 1.4em;
+  }
+
+  .comment-box {
+    margin-top: 0px
+  }
+}

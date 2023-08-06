@@ -1,0 +1,58 @@
+.about-cheese-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-cheese-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+}
+
+.about-cheese-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.about-cheese-description {
+  text-align: justify;
+  margin: 0px;
+}
+
+/* TABLET */
+
+@media (min-width: 768px) {
+  .about-cheese-img {
+    max-height: 400px;
+  }
+}
+
+/* DESKTOP */
+
+@media (min-width: 1024px) {
+
+  .wrapper-one-cheese {
+    height: 510px;
+  }
+
+  .about-cheese-section {
+    flex-direction: row;
+  }
+
+  .about-cheese-img {
+    flex-basis: 40%;
+    width: 450px;
+    height: 350px;
+  }
+
+  .about-cheese-text {
+    flex-basis: 60%;
+  }
+}

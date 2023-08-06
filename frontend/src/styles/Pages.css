@@ -1,0 +1,198 @@
+.CheesesPageH1,
+.add-cheese-h1,
+.login-h1,
+.register-h1,
+.about-cheese-h1 {
+  text-align: left;
+  font-size: 1.4em;
+}
+
+.add-cheese-h1,
+.login-h1,
+.register-h1 {
+  text-align: center;
+}
+
+.about-cheese-h1 {
+  text-transform: uppercase;
+}
+
+.section-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.section-bottom-border {
+  border-bottom: 1px solid #261f1f;
+}
+
+.form-h2,
+.login-h2,
+.register-h2 {
+  font-size: 1.2em;
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
+.post-loading-h3 {
+  font-size: 1em;
+  margin: 0px;
+  color: dimgrey;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.paragraph {
+  text-align: end;
+  font-size: 0.9em;
+}
+
+.paragraph-center {
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.wrapper-login,
+.wrapper-register,
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  width: 100%;
+}
+
+/* .wrapper-one-cheese {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+
+.button-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.middle-section-login,
+.middle-section-register,
+.middle-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1200px;
+  width: 80%;
+  margin-bottom: 30px;
+}
+
+.middle-section-login,
+.middle-section-register {
+  width: 300px;
+}
+
+.CheeseRenders {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.login-buttons,
+.register-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.is-loading-text {
+  font-size: 1.2em;
+  text-align: center;
+  color: dimgrey;
+}
+
+/* TABLET */
+
+@media (min-width: 768px) {
+  .CheesesPageH1,
+  .add-cheese-h1,
+  .login-h1,
+  .register-h1,
+  .about-cheese-h1 {
+    font-size: 1.7em;
+  }
+
+  .form-h2,
+  .login-h2,
+  .register-h2 {
+    font-size: 1.5em;
+  }
+
+  .post-loading-h3 {
+    font-size: 1.3em;
+  }
+
+  .paragraph, .paragraph-center {
+    font-size: 1em;
+  }
+
+  .middle-section-login,
+  .middle-section-register {
+    width: 500px;
+  }
+
+  .is-loading-text {
+    font-size: 1.5em;
+  }
+}
+
+/* DESKTOP */
+
+@media (min-width: 1024px) {
+  .CheesesPageH1,
+  .add-cheese-h1,
+  .login-h1,
+  .register-h1,
+  .about-cheese-h1 {
+    font-size: 2em;
+  }
+
+  .form-h2,
+  .login-h2,
+  .register-h2 {
+    font-size: 1.8em;
+  }
+
+  .post-loading-h3 {
+    font-size: 1.6em;
+  }
+  
+  .paragraph .paragraph-center {
+    font-size: 1.2em;
+  }
+
+  .middle-section-login,
+  .middle-section-register {
+    width: 600px;
+  }
+
+  .is-loading-text {
+    font-size: 1.8em;
+  }
+
+  .about-cheese-section {
+    flex-direction: row;
+  }
+
+  .about-cheese-img {
+    width: 60%;
+  }
+}
