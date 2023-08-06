@@ -32,7 +32,7 @@ function reducer(state, action) {
 export default function useFetchPost(URL, successCallBack, useFetchPut) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  const jwtToken = localStorage.getItem("jwtToken");
 
   function fetchPost(body) {
     dispatch({ type: "FETCH_START" });

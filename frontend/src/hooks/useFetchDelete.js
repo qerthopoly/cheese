@@ -1,5 +1,5 @@
 export function useFetchDelete(URL, fetchData) {
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  const jwtToken = localStorage.getItem("jwtToken");
 
   function fetchDelete(id) {
     fetch(`${URL}/${id}`, {

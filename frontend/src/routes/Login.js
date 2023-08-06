@@ -25,9 +25,9 @@ export default function Login() {
     const JWTtoken = data.token;
     const user_id = data.user_id;
     const nickname = data.nickname;
-    sessionStorage.setItem("jwtToken", JWTtoken);
-    sessionStorage.setItem("user_id", user_id);
-    sessionStorage.setItem("nickname", nickname);
+    localStorage.setItem("jwtToken", JWTtoken);
+    localStorage.setItem("user_id", user_id);
+    localStorage.setItem("nickname", nickname);
 
     setIsLoggedIn(true);
     navigate("/home");

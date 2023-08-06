@@ -61,7 +61,7 @@ export default function useFetchGet(URL, sort) {
 
 	const handleUpdate = () => setCounter(counter + 1)
 
-  const jwtToken = sessionStorage.getItem("jwtToken");
+  const jwtToken = localStorage.getItem("jwtToken");
 
   useEffect(() => {
     function fetchData() {

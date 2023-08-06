@@ -15,9 +15,9 @@ export default function NavigationBar() {
   }
 
   function logoutUser() {
-    sessionStorage.removeItem("jwtToken");
-    sessionStorage.removeItem("user_id");
-    sessionStorage.removeItem("nickname");
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("nickname");
     setIsLoggedIn(false);
     navigate("/");
   }
@@ -29,7 +29,7 @@ export default function NavigationBar() {
       </a>
       {isLoggedIn ? (
         <div className="welcome-section">
-          <h2 className="welcome-text">Welcome, {sessionStorage.getItem("nickname")}!</h2>
+          <h2 className="welcome-text">Welcome, {localStorage.getItem("nickname")}!</h2>
           <ButtonMain text="LOGOUT" buttonFunction={logoutUser} />
         </div>
       ) : (
