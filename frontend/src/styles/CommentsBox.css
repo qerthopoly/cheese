@@ -1,3 +1,7 @@
+.comment-box {
+  margin-top: 20px
+}
+
 .comment-info {
   display: flex;
   flex-direction: column;
@@ -35,5 +39,9 @@
 @media (min-width: 1024px) {
   .comment-name-h3 {
     font-size: 1.4em;
+  }
+
+  .comment-box {
+    margin-top: 0px
   }
 }

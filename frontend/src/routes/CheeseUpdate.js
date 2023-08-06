@@ -24,8 +24,6 @@ export default function CheeseUpdate() {
 
   const { state: cheeseState } = useFetchGet(cheeseURL);
 
-//   console.log("CHYZ STEIT", cheeseState.data);
-
   const { state, fetchPost } = useFetchPost(
     cheeseURL,
     () => navigate(`/cheese/${id}`),

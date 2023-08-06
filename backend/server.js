@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { isLoggedIn } = require("./middle");
-const { log } = require("console");
 
 const app = express();
 app.use(express.json());
@@ -58,13 +57,10 @@ app.post("/cheese", isLoggedIn, async (req, res, next) => {
 app.put("/cheese/:id", isLoggedIn, async (req, res, next) => {
   const updatesCheese = req.body;
   const cheeseID = req.params.id;
-  const userID = req.myData.user_id;
 
   try {
     const dbRes = await cheeseDB.updateOne(
-      { _id: new ObjectId(cheeseID), 
-        // creator_id: new ObjectId(userID)
-      },
+      { _id: new ObjectId(cheeseID) },
       {
         $set: {
           name: updatesCheese.name,
@@ -104,15 +100,6 @@ app.get("/cheese/:id", async (req, res) => {
   }
 });
 
-app.get("/users", async (req, res) => {
-  try {
-    const data = await usersDB.find().toArray();
-    return res.send(data);
-  } catch {
-    res.status(500).send({ error: "Error while loading users" });
-  }
-});
-
 app.get("/comments/:cheese_id", async (req, res) => {
   const cheeseID = req.params.cheese_id;
   try {
@@ -146,7 +133,6 @@ app.post("/comments", isLoggedIn, async (req, res, next) => {
 
   const currentDate = new Date();
   const userID = req.myData.user_id;
-  // const nickname = req.myData.nickname;
   const cheeseID = newComment.cheese_id;
   const comment = newComment.comment;
 
@@ -155,7 +141,6 @@ app.post("/comments", isLoggedIn, async (req, res, next) => {
   try {
     const dbRes = await commentsDB.insertOne({
       user_id: new ObjectId(userID),
-      // nickname: nickname,
       comment: comment,
       date: currentDate.toISOString(),
       cheese_id: new ObjectId(cheeseID),
@@ -187,24 +172,12 @@ app.delete("/comments/:comment_id", isLoggedIn, async (req, res, next) => {
   }
 });
 
-// app.get("/likes", async (req, res) => {
-
-//   try {
-//     const data = await likesDB.find().toArray()
-//     console.log("LIKES", data)
-//     return res.send(data)
-//   } catch {
-//     return res.status(500).send({ error: "Error while loading likes yo" });
-//   }
-// });
-
 app.get("/likes/:cheese_id", async (req, res) => {
   const cheeseID = req.params.cheese_id;
   try {
     const data = await likesDB
       .find({ cheese_id: new ObjectId(cheeseID) })
       .toArray();
-    // console.log("LIKES NOT LOGGED SERVER", data);
     const response = { numberOfLikes: data.length, likedByUser: false };
     return res.send(response);
   } catch {
@@ -219,7 +192,6 @@ app.get("/likes_user/:cheese_id", isLoggedIn, async (req, res, next) => {
     const data = await likesDB
       .find({ cheese_id: new ObjectId(cheeseID) })
       .toArray();
-    // console.log("LIKES LOGGED SERVER", data);
     const isItLiked = data.some((like) =>
       like.user_id.equals(new ObjectId(userID))
     );
@@ -335,8 +307,6 @@ app.post("/login", async (req, res) => {
     },
     JWT_KEY
   );
-
-  // console.log("ENCODED", JWTEncoded);
 
   res.json({
     error: false,

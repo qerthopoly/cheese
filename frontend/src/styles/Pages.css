@@ -41,6 +41,8 @@
   font-size: 1em;
   margin: 0px;
   color: dimgrey;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .paragraph {
@@ -68,6 +70,11 @@
   flex-direction: column;
   align-items: center;
 } */
+
+.button-wrapper {
+  display: flex;
+  gap: 10px;
+}
 
 .middle-section-login,
 .middle-section-register,
@@ -103,6 +110,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .is-loading-text {

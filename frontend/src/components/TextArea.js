@@ -4,6 +4,7 @@ export default function TextArea({
   placeholder,
   onChange,
   onBlur,
+  value,
   initialValue,
   errorMessage,
 }) {
@@ -16,7 +17,8 @@ export default function TextArea({
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
-        defaultValue={initialValue} 
+        value={value}
+        defaultValue={initialValue}
         rows="4"
       ></textarea>
       {errorMessage && (
