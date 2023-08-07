@@ -46,7 +46,6 @@ app.post("/cheese", isLoggedIn, async (req, res, next) => {
       creator_id: new ObjectId(userID),
     });
     if (dbRes.acknowledged) {
-      console.log("Cheese added successfully!");
       return res.send(dbRes);
     }
   } catch {
