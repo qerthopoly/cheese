@@ -18,7 +18,7 @@ export default function CheeseAbout() {
   const getCommentsURL = `http://localhost:9998/comments/${id}`;
 
   const { state: cheeseState } = useFetchGet(cheeseURL);
-  const { state: commentsState, update } = useFetchGet(getCommentsURL);
+  const { state: commentsState } = useFetchGet(getCommentsURL);
 
   const navigate = useNavigate();
 

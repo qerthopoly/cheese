@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../images/cheese-logo.png";
 import "../styles/MainPage.css";
 import ButtonMain from "./ButtonMain";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 export default function NavigationBar() {

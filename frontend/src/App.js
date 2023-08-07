@@ -8,7 +8,7 @@ import AddCheese from "./routes/AddCheese";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import AuthProvider from "./contexts/AuthContext";
-import CheeseAbout from "./routes/CheeseAbout.js";
+import CheeseAbout from "./routes/CheeseAbout";
 import CheeseUpdate from "./routes/CheeseUpdate";
 
 const routes = createBrowserRouter([
